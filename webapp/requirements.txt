@@ -1,0 +1,7 @@
+gunicorn
+Flask
+Jinja2
+Werkzeug
+flask-cors
+jsonpickle
+face_recognition
