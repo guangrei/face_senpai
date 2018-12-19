@@ -26,7 +26,6 @@ response = requests.post('https://face-senpai.herokuapp.com/', files=files)
 
 face = jsonpickle.decode(json.loads(response.content.decode("utf-8"))["msg"])
 
-- 
 # face2
 files2 = {
     'file': ('image2.jpg', open('image2.jpg', 'rb')),
