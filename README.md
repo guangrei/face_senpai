@@ -75,4 +75,14 @@ $ cd face_senpai
 $ cp zeit/* .
 $ now
 ```
+deploy to openshift:
+```
+$ git clone https://github.com/anigrab/face_senpai.git
+$ cd face_senpai
+$ cp openshift/* .
+$ docker build -t openshift-face-senpai .
+$ oc new-project anigrab
+$ oc new-app openshift-face-senpai --name face-senpai
+$ oc expose svc face-senpai --name=face-senpai
+```
 more server coming soon...
