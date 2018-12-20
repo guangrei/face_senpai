@@ -1,5 +1,6 @@
 FROM cumi/face_recognition
 MAINTAINER guangrei <grei@tuta.io>
+LABEL name "face-senpai"
 
 ADD ./webapp/requirements.txt /tmp/requirements.txt
 
