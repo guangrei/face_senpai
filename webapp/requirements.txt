@@ -1,4 +1,4 @@
-gunicorn
+gunicorn==19.9.0
 Flask
 Jinja2
 Werkzeug
