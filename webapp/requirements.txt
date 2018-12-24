@@ -1,6 +1,6 @@
 gunicorn==19.9.0
 Flask==1.0.2
-Jinja2
+Jinja2==2.10
 Werkzeug
 flask-cors
 jsonpickle
