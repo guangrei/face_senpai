@@ -6,32 +6,27 @@ for client  `dlib`  and  `face_recognition`  no longer need.
 
 ### example
 
-this example with demo server https://face-senpai.herokuapp.com
-
 ``` python
 import requests
 import numpy as np
-import jsonpickle
-import jsonpickle.ext.numpy as jsonpickle_numpy
-import json
-
-jsonpickle_numpy.register_handlers()
 
 # face1
 files = {
     'file': ('image1.jpg', open('image1.jpg', 'rb')),
 }
 
-response = requests.post('https://face-senpai.herokuapp.com/', files=files)
+response = requests.post('https://api-url/', files=files).json()
 
-face = jsonpickle.decode(json.loads(response.content.decode("utf-8"))["msg"])
+face = response['recognized']['face_descriptor'][0]
+face = np.asarray(face)
 
 # face2
 files2 = {
     'file': ('image2.jpg', open('image2.jpg', 'rb')),
 }
-response2 = requests.post('https://face-senpai.herokuapp.com/', files=files2)
-face2 = jsonpickle.decode(json.loads(response2.content.decode("utf-8"))["msg"])
+response = requests.post('https://face-senpai.herokuapp.com/', files=files2).json()
+face2 = response['recognized']['face_descriptor'][0]
+face2 = np.asarray(face2)
 
 print("face1 descriptor:")
 print(face)
@@ -47,7 +42,6 @@ if compare[0]:
 else:
     print("no match!")
 ```
-before run, make sure to install required dependency `pip install numpy jsonpickle requests` 
 
 ### Run & Deploy
 
