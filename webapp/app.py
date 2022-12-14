@@ -18,7 +18,8 @@ def upload_image():
             result = {"status": "error", "reason": "file empty!"}
             return jsonify(result)
         if file and facelib.verify_ext(file.filename) and facelib.verify_image(file):
-            return facelib.recognize(file)
+            result = facelib.recognize(file)
+            return jsonify(result)
     result = {"status": "pending", "reason": "listen for request!"}
     return jsonify(result)
 
