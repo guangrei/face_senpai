@@ -6,6 +6,8 @@ for client  `dlib`  and  `face_recognition`  no longer need.
 
 ### example
 
+this example use demo endpoints https://grei.pythonanywhere.com/api/face_recognition
+
 ``` python
 import requests
 import numpy as np
@@ -15,7 +17,7 @@ files = {
     'file': ('image1.jpg', open('image1.jpg', 'rb')),
 }
 
-response = requests.post('https://api-url/', files=files).json()
+response = requests.post('https://grei.pythonanywhere.com/api/face_recognition', files=files).json()
 
 face = response['recognized']['face_descriptor'][0]
 face = np.asarray(face)
@@ -24,7 +26,7 @@ face = np.asarray(face)
 files2 = {
     'file': ('image2.jpg', open('image2.jpg', 'rb')),
 }
-response = requests.post('https://face-senpai.herokuapp.com/', files=files2).json()
+response = requests.post('https://grei.pythonanywhere.com/api/face_recognition', files=files2).json()
 face2 = response['recognized']['face_descriptor'][0]
 face2 = np.asarray(face2)
 
@@ -43,6 +45,41 @@ else:
     print("no match!")
 ```
 
+example with php, make sure to install `php-ml` with `composer require php-ai/php-ml`.
+
+```php
+<?php
+require "vendor/autoload.php";
+
+use Phpml\Math\Distance\Euclidean;
+use Phpml\Math\Distance;
+
+function upload($file)
+{ 
+    $cFile = curl_file_create($file);
+    $post = array('file'=> $cFile);
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, "https://grei.pythonanywhere.com/api/face_recognition");
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $result=curl_exec($ch);
+    curl_close($ch);
+    return json_decode($result, true);
+}
+
+$descriptor1 = upload("greysia1.jpg")['recognized']['face_descriptor'][0];
+$descriptor2 = upload("greysia2.jpg")['recognized']['face_descriptor'][0];
+$euclidean = new Euclidean();
+$distance = $euclidean->distance($descriptor1, $descriptor2);
+
+if ($distance <= 0.6) {
+    echo "Hello, greysia!\n";
+} else {
+    echo "not greysia!\n";
+}
+
+```
 ### Run & Deploy
 
 run locally:
